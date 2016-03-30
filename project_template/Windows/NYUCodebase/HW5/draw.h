@@ -7,11 +7,12 @@
 #include "Entity.h"
 #include "ShaderProgram.h"
 
-class Draw{
+class Draw {
 public:
+	GLuint LoadTexture(const char *image);
 	void DrawSpriteSheetSprite(ShaderProgram *program, int index, int spriteCountX, int spriteCountY);
 	void DrawMap(ShaderProgram *program, int index, int spriteCountX, int spriteCountY);
-	void drawSprite(GLint texture, float x, float y, float xChange = 0, float yChange = 0);
+	void drawSprite(GLint texture, float x, float y);
 
 private:
 
