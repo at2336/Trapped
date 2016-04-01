@@ -60,6 +60,53 @@
 		glDisableVertexAttribArray(program->texCoordAttribute);
 	}
 
+	void Draw::DrawMap() {
+		vector<float> vertexData;
+		vector<float> texCoordData;
+
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, sheet->getID());
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		//glTranslatef((-TILE_SIZE * mapWidth * 0.1f), (TILE_SIZE * mapHeight * 0.5f), 0.0f);
+
+		for (int y = 0; y < mapHeight; y++) {
+			for (int x = 0; x < mapWidth; x++) {
+				if (levelData[y][x] != 0) {
+
+					float u = (float)(((int)levelData[y][x]) % SPRITE_COUNT_X) / (float)SPRITE_COUNT_X;
+					float v = (float)(((int)levelData[y][x]) / SPRITE_COUNT_X) / (float)SPRITE_COUNT_Y;
+					float spriteWidth = 1.0f / (float)SPRITE_COUNT_X;
+					float spriteHeight = 1.0f / (float)SPRITE_COUNT_Y;
+					vertexData.insert(vertexData.end(), {
+						TILE_SIZE * x, -TILE_SIZE * y,
+						TILE_SIZE * x, (-TILE_SIZE * y) - TILE_SIZE,
+						(TILE_SIZE * x) + TILE_SIZE, (-TILE_SIZE * y) - TILE_SIZE,
+						(TILE_SIZE * x) + TILE_SIZE, -TILE_SIZE * y
+					});
+					texCoordData.insert(texCoordData.end(), { u, v,
+						u, v + (spriteHeight),
+						u + spriteWidth, v + (spriteHeight),
+						u + spriteWidth, v
+					});
+				}
+			}
+		}
+
+		glVertexPointer(2, GL_FLOAT, 0, vertexData.data());
+		glEnableClientState(GL_VERTEX_ARRAY);
+
+		glTexCoordPointer(2, GL_FLOAT, 0, texCoordData.data());
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		glDrawArrays(GL_QUADS, 0, vertexData.size() / 2);
+
+		glDisable(GL_TEXTURE_2D);
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glPopMatrix();
+	}
+
 	void Draw::DrawMap(ShaderProgram *program, int index, int spriteCountX, int spriteCountY)
 	{
 		float u = (float)(((int)index) % spriteCountX) / (float)spriteCountX;
