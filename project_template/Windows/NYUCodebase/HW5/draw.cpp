@@ -72,8 +72,8 @@ using namespace std;
 		glPushMatrix();
 		//glTranslatef((-tile_size * mapWidth * 0.1f), (tile_size * mapHeight * 0.5f), 0.0f);
 
-		for (int y = 0; y < width; y++) {
-			for (int x = 0; x < height; x++) {
+		for (int y = 0; y < mapWidth; y++) {
+			for (int x = 0; x < mapHeight; x++) {
 				if (levelData[y][x] != 0) {
 
 					float u = (float)(((int)levelData[y][x]) % SPRITE_COUNT_X) / (float)SPRITE_COUNT_X;
