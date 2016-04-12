@@ -8,6 +8,7 @@
 #include "ShaderProgram.h"
 #include "Matrix.h"
 #include <vector>;
+
 using namespace std;
 
 #ifdef _WINDOWS
@@ -62,29 +63,28 @@ using namespace std;
 		glDisableVertexAttribArray(program->texCoordAttribute);
 	}
 
-	void Draw::DrawMap() {
+	void Draw::DrawMap(ShaderProgram *program) {
 		vector<float> vertexData;
 		vector<float> texCoordData;
 
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, sheet->getID());
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		//glTranslatef((-tile_size * mapWidth * 0.1f), (tile_size * mapHeight * 0.5f), 0.0f);
+		GLuint mapSheet = LoadTexture("spritesheet_rgba.png");
+		glBindTexture(GL_TEXTURE_2D, mapSheet);
+		//glTranslatef((-tiles * mapWidth * 0.1f), (tiles * mapHeight * 0.5f), 0.0f);
 
-		for (int y = 0; y < mapWidth; y++) {
-			for (int x = 0; x < mapHeight; x++) {
+		for (int y = 0; y < mapHeight; y++) {
+			for (int x = 0; x < mapWidth; x++) {
 				if (levelData[y][x] != 0) {
 
-					float u = (float)(((int)levelData[y][x]) % SPRITE_COUNT_X) / (float)SPRITE_COUNT_X;
-					float v = (float)(((int)levelData[y][x]) / SPRITE_COUNT_X) / (float)SPRITE_COUNT_Y;
-					float spriteWidth = 1.0f / (float)SPRITE_COUNT_X;
-					float spriteHeight = 1.0f / (float)SPRITE_COUNT_Y;
+					float u = (float)(((int)levelData[y][x]) % spriteCountX) / (float)spriteCountX;
+					float v = (float)(((int)levelData[y][x]) / spriteCountX) / (float)spriteCountY;
+					float spriteWidth = 1.0f / (float)spriteCountX;
+					float spriteHeight = 1.0f / (float)spriteCountY;
 					vertexData.insert(vertexData.end(), {
-						tile_size * x, -tile_size * y,
-						tile_size * x, (-tile_size * y) - tile_size,
-						(tile_size * x) + tile_size, (-tile_size * y) - tile_size,
-						(tile_size * x) + tile_size, -tile_size * y
+						tiles * x, -tiles * y,
+						tiles * x, (-tiles * y) - tiles,
+						(tiles * x) + tiles, (-tiles * y) - tiles,
+						(tiles * x) + tiles, -tiles * y
 					});
 					texCoordData.insert(texCoordData.end(), { u, v,
 						u, v + (spriteHeight),
@@ -95,18 +95,14 @@ using namespace std;
 			}
 		}
 
-		glVertexPointer(2, GL_FLOAT, 0, vertexData.data());
-		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexAttribPointer(program->positionAttribute, 2, GL_FLOAT, false, 0, vertices);
+		glEnableVertexAttribArray(program->positionAttribute);
+		glVertexAttribPointer(program->texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords);
+		glEnableVertexAttribArray(program->texCoordAttribute);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 
-		glTexCoordPointer(2, GL_FLOAT, 0, texCoordData.data());
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-		glDrawArrays(GL_QUADS, 0, vertexData.size() / 2);
-
-		glDisable(GL_TEXTURE_2D);
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glPopMatrix();
+		glDisableVertexAttribArray(program->positionAttribute);
+		glDisableVertexAttribArray(program->texCoordAttribute);
 	}
 
 	void Draw::drawSprite(GLint texture, float x, float y)
@@ -206,8 +202,8 @@ using namespace std;
 				string xPosition, yPosition;
 				getline(lineStream, xPosition, ',');
 				getline(lineStream, yPosition, ',');
-					float placeX = atoi(xPosition.c_str()) / 16 * tile_size;
-				float placeY = atoi(yPosition.c_str()) / 16 * (-1 * tile_size);
+					float placeX = atoi(xPosition.c_str()) / 16 * TILE_SIZE;
+				float placeY = atoi(yPosition.c_str()) / 16 * -TILE_SIZE;
 				placeEntity(type, placeX, placeY);
 			}
 		}
