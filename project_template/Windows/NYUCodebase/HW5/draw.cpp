@@ -65,7 +65,7 @@ using namespace std;
 
 	void Draw::DrawMap(ShaderProgram *program) {
 		vector<float> vertexData;
-		vector<float> texCoordData;
+		vector<float> texData;
 
 		glEnable(GL_TEXTURE_2D);
 		GLuint mapSheet = LoadTexture("spritesheet_rgba.png");
@@ -86,7 +86,7 @@ using namespace std;
 						(tiles * x) + tiles, (-tiles * y) - tiles,
 						(tiles * x) + tiles, -tiles * y
 					});
-					texCoordData.insert(texCoordData.end(), { u, v,
+					texData.insert(texData.end(), { u, v,
 						u, v + (spriteHeight),
 						u + spriteWidth, v + (spriteHeight),
 						u + spriteWidth, v
@@ -95,9 +95,9 @@ using namespace std;
 			}
 		}
 
-		glVertexAttribPointer(program->positionAttribute, 2, GL_FLOAT, false, 0, vertices);
+		glVertexAttribPointer(program->positionAttribute, 2, GL_FLOAT, false, 0, vertexData.data());
 		glEnableVertexAttribArray(program->positionAttribute);
-		glVertexAttribPointer(program->texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords);
+		glVertexAttribPointer(program->texCoordAttribute, 2, GL_FLOAT, false, 0, texData.data());
 		glEnableVertexAttribArray(program->texCoordAttribute);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
@@ -208,4 +208,9 @@ using namespace std;
 			}
 		}
 		return true;
+	}
+
+	void placeEntity()
+	{
+
 	}
