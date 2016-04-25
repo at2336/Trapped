@@ -6,7 +6,6 @@
 #include <SDL_image.h>
 #include <vector>
 
-
 class Entity {
 private:
 	float x;
@@ -19,6 +18,7 @@ private:
 	float YAccel;
 
 public:
+	Entity(float x, float y, float width, float height);
 	void setX(float x);
 	void setY(float y);
 	void setXVelo(float x);

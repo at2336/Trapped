@@ -63,7 +63,8 @@ using namespace std;
 		glDisableVertexAttribArray(program->texCoordAttribute);
 	}
 
-	void Draw::DrawMap(ShaderProgram *program) {
+	void Draw::DrawMap(ShaderProgram *program) 
+	{
 		vector<float> vertexData;
 		vector<float> texData;
 
@@ -185,6 +186,16 @@ using namespace std;
 		return true;
 	}
 
+	void placeEntity(string type, float placeX, float placeY)
+	{
+		if (type == "player")
+		{
+			float w = 1.0f / 16.0f;
+			float h = 1.0f / 16.0f;
+			Entity* player = new Entity(placeX, placeY, w, h);
+		}
+	}
+
 	bool Draw::readEntityData(std::ifstream &stream) {
 		string line;
 		string type;
@@ -202,15 +213,10 @@ using namespace std;
 				string xPosition, yPosition;
 				getline(lineStream, xPosition, ',');
 				getline(lineStream, yPosition, ',');
-					float placeX = atoi(xPosition.c_str()) / 16 * TILE_SIZE;
-				float placeY = atoi(yPosition.c_str()) / 16 * -TILE_SIZE;
+					float placeX = atoi(xPosition.c_str()) / 16 * tiles;
+				float placeY = atoi(yPosition.c_str()) / 16 * -tiles;
 				placeEntity(type, placeX, placeY);
 			}
 		}
 		return true;
-	}
-
-	void placeEntity()
-	{
-
 	}
