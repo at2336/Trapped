@@ -18,6 +18,10 @@ private:
 	float height;
 	float XVelo;
 	float YVelo;
+	bool collideTop;
+	bool collideRight;
+	bool collideLeft;
+	bool collideBottom;
 
 	SpriteSheet sprite;
 

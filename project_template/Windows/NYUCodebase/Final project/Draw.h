@@ -25,9 +25,9 @@ private:
 
 	bool win;
 
-	unsigned char** levelData;
+	int** levelData;
 
-	float tiles = 1.0f;
+	float tiles = 0.09f;
 
 	int spriteCountX = 30;
 	int spriteCountY = 30;

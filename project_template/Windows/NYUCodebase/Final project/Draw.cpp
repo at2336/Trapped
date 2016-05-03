@@ -13,10 +13,10 @@ using namespace std;
 
 Draw::Draw()
 {
-	Init();
 	mapWidth = 0;
 	mapHeight = 0;
 	win = false;
+	Init();
 }
 
 void Draw::Init()
@@ -119,11 +119,11 @@ void Draw::DrawMap(ShaderProgram *program)
 	for (int y = 0; y < mapHeight; y++) {
 		for (int x = 0; x < mapWidth; x++) {
 			if (levelData[y][x] != 0) {
-
 				float u = (float)(((int)levelData[y][x]) % spriteCountX) / (float)spriteCountX;
 				float v = (float)(((int)levelData[y][x]) / spriteCountX) / (float)spriteCountY;
 				float spriteWidth = 1.0f / (float)spriteCountX;
 				float spriteHeight = 1.0f / (float)spriteCountY;
+				
 				vertexData.insert(vertexData.end(), {
 					tiles * x, tiles * y + tiles,
 					tiles * x + tiles, tiles * y,
@@ -143,7 +143,6 @@ void Draw::DrawMap(ShaderProgram *program)
 			}
 		}
 	}
-
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -178,9 +177,9 @@ bool Draw::readHeader(std::ifstream &stream) {
 		return false;
 	}
 	else { // allocate our map data
-		levelData = new unsigned char*[mapHeight];
+		levelData = new int*[mapHeight];
 		for (int i = 0; i < mapHeight; ++i) {
-			levelData[i] = new unsigned char[mapWidth];
+			levelData[i] = new int[mapWidth];
 		}
 		return true;
 	}
@@ -197,11 +196,12 @@ bool Draw::readLayerData(std::ifstream &stream) {
 		if (key == "data") {
 			for (int y = 0; y < mapHeight; y++) {
 				getline(stream, line);
+				
 				istringstream lineStream(line);
 				string tile;
 				for (int x = 0; x < mapWidth; x++) {
 					getline(lineStream, tile, ',');
-					unsigned char val = (unsigned char)atoi(tile.c_str());
+					int val = atoi(tile.c_str());
 					if (val > 0) {
 						// be careful, the tiles in this format are indexed from 1 not 0
 						levelData[y][x] = val - 1;
