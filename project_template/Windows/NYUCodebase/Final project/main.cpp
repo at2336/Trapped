@@ -42,19 +42,26 @@ int main(int argc, char *argv[])
 
 	float lastFrameTicks = 0.0f;
 
+	program.setModelMatrix(modelMatrix);
+	program.setProjectionMatrix(projectionMatrix);
+	program.setViewMatrix(viewMatrix);
+
 	SDL_Event event;
 	bool done = false;
 	Draw draw;
 	while (!done) 
 	{
-		program.setModelMatrix(modelMatrix);
-		program.setProjectionMatrix(projectionMatrix);
-		program.setViewMatrix(viewMatrix);
 
 		float ticks = (float)SDL_GetTicks() / 1000.0f;
 		float elapsed = ticks - lastFrameTicks;
 		lastFrameTicks = ticks;
+<<<<<<< HEAD
 		draw.DrawMap(&program);
+=======
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		
+>>>>>>> origin/master
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
 				done = true;
@@ -63,6 +70,11 @@ int main(int argc, char *argv[])
 			{
 
 			}
+<<<<<<< HEAD
+=======
+		draw.DrawSpriteSheetSprite(&program, 29, 30, 29);
+		cout << "hello";
+>>>>>>> origin/master
 		}
 		SDL_GL_SwapWindow(displayWindow);
 	}
