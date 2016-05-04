@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
@@ -84,6 +85,7 @@
   <ItemGroup>
     <ClInclude Include="Draw.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="SpriteSheet.h" />

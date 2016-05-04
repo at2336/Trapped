@@ -7,7 +7,7 @@
 #include "ShaderProgram.h"
 #include "Matrix.h"
 #include "vector"
-#include "Draw.h"
+#include "Game.h"
 
 using namespace std;
 
@@ -48,34 +48,15 @@ int main(int argc, char *argv[])
 
 	SDL_Event event;
 	bool done = false;
-	Draw draw;
+	Game game;
 	while (!done) 
 	{
 
 		float ticks = (float)SDL_GetTicks() / 1000.0f;
 		float elapsed = ticks - lastFrameTicks;
 		lastFrameTicks = ticks;
-<<<<<<< HEAD
-		draw.DrawMap(&program);
-=======
-		glClear(GL_COLOR_BUFFER_BIT);
+		game.DrawMap(&program);
 
-		
->>>>>>> origin/master
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
-				done = true;
-			}
-			else if (event.key.keysym.scancode == SDL_SCANCODE_DOWN)
-			{
-
-			}
-<<<<<<< HEAD
-=======
-		draw.DrawSpriteSheetSprite(&program, 29, 30, 29);
-		cout << "hello";
->>>>>>> origin/master
-		}
 		SDL_GL_SwapWindow(displayWindow);
 	}
 

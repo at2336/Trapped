@@ -6,6 +6,8 @@
 #include <SDL_image.h>
 #include "Entity.h"
 #include "ShaderProgram.h"
+#include <vector>
+using namespace std;
 
 class Draw {
 public:
@@ -18,7 +20,7 @@ public:
 	bool readEntityData(std::ifstream &stream);
 	bool readLayerData(std::ifstream &stream);
 	bool readHeader(std::ifstream &stream);
-
+	void placeEntity(string type, float placeX, float placeY);
 private:
 	unsigned mapHeight;
 	unsigned mapWidth;
@@ -28,7 +30,9 @@ private:
 	int** levelData;
 
 	float tiles = 0.09f;
-//can i see the picture file
+
 	int spriteCountX = 30;
 	int spriteCountY = 30;
+
+	vector<Entity*> entities;
 };

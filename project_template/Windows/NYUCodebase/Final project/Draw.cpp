@@ -34,7 +34,7 @@ void Draw::Init()
 		else if (line == "[layer]") {
 			readLayerData(infile);
 		}
-		else if (line == "[ObjectsLayer1]") {
+		else if (line == "[ObjectsLayer]") {
 			readEntityData(infile);
 		}
 	}
@@ -56,56 +56,6 @@ GLuint Draw::LoadTexture(const char *image)
 	return textureID;
 }
 
-void Draw::DrawSpriteSheetSprite(ShaderProgram *program, int index, int spriteCountX, int spriteCountY)
-{
-	float u = (float)(((int)index) % spriteCountX) / (float)spriteCountX;
-	float v = (float)(((int)index) / spriteCountX) / (float)spriteCountY;
-	float spriteWidth = 1.0 / (float)spriteCountX;
-	float spriteHeight = 1.0 / (float)spriteCountY;
-	GLfloat texCoords[] = {
-		u, v + spriteHeight,
-		u + spriteWidth, v,
-		u, v,
-		u, v + spriteHeight,
-		u + spriteWidth, v + spriteHeight,
-		u + spriteWidth, v
-	};
-	float vertices[] = { -2.0, 1.0, -1.0, 3.0, -2.0, 3.0, -2.0, 1.0, -1.0, 1.0, -1.0, 3.0 };
-
-	GLuint player = LoadTexture("spritesheet_rgba.png");
-	glBindTexture(GL_TEXTURE_2D, player);
-
-	glVertexAttribPointer(program->positionAttribute, 2, GL_FLOAT, false, 0, vertices);
-	glEnableVertexAttribArray(program->positionAttribute);
-	glVertexAttribPointer(program->texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords);
-	glEnableVertexAttribArray(program->texCoordAttribute);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-	glDisableVertexAttribArray(program->positionAttribute);
-	glDisableVertexAttribArray(program->texCoordAttribute);
-}
-
-void Draw::drawSprite(GLint texture, float x, float y)
-{
-	ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
-
-	glBindTexture(GL_TEXTURE_2D, texture);
-	float vertices[] = { -2.0, 1.0, -1.0, 3.0, -2.0, 3.0, -2.0, 1.0, -1.0, 1.0, -1.0, 3.0 };
-	float texCoords[] = { 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0 };
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertices);
-	glEnableVertexAttribArray(program.positionAttribute);
-	glVertexAttribPointer(program.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords);
-	glEnableVertexAttribArray(program.texCoordAttribute);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-	glDisableVertexAttribArray(program.positionAttribute);
-	glDisableVertexAttribArray(program.texCoordAttribute);
-}
-
 void Draw::DrawMap(ShaderProgram *program)
 {
 	vector<float> vertexData;
@@ -125,12 +75,7 @@ void Draw::DrawMap(ShaderProgram *program)
 				float spriteHeight = 1.0f / (float)spriteCountY;
 				
 				vertexData.insert(vertexData.end(), {
-					tiles * x, tiles * y + tiles,
-					tiles * x + tiles, tiles * y,
-					tiles * x, tiles * y,
-					tiles * x, tiles * y + tiles,
-					tiles * x + tiles, tiles * y + tiles,
-					tiles * x + tiles, tiles * y
+					-2.0, 1.0, -1.0, 3.0, -2.0, 3.0, -2.0, 1.0, -1.0, 1.0, -1.0, 3.0
 				});
 				texData.insert(texData.end(), { 
 					u, v + spriteHeight,
@@ -216,19 +161,21 @@ bool Draw::readLayerData(std::ifstream &stream) {
 	return true;
 }
 
-void placeEntity(string type, float placeX, float placeY)
+void Draw::placeEntity(string type, float placeX, float placeY)
 {
 	if (type == "player")
 	{
+		cout << "Player";
 		float w = 1.0f / 16.0f;
 		float h = 1.0f / 16.0f;
-		Entity* player = new Entity(placeX, placeY, w, h);
+		Entity* player = new Entity(placeX, placeY, w, h, type);
+		entities.push_back(player);
 	}
 	if (type == "enemy")
 	{
 		float w = 1.0f / 16.0f;
 		float h = 1.0f / 16.0f;
-		Entity* player = new Entity(placeX, placeY, w, h);
+		Entity* player = new Entity(placeX, placeY, w, h, type);
 	}
 }
 
