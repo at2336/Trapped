@@ -112,7 +112,7 @@ void Draw::DrawMap(ShaderProgram *program)
 	vector<float> texData;
 
 	glEnable(GL_TEXTURE_2D);
-	GLuint mapSheet = LoadTexture("spritesheet_rgba.png");
+	GLuint mapSheet = LoadTexture("spritesheet.png");
 	glBindTexture(GL_TEXTURE_2D, mapSheet);
 	//glTranslatef((-tiles * mapWidth * 0.1f), (tiles * mapHeight * 0.5f), 0.0f);
 

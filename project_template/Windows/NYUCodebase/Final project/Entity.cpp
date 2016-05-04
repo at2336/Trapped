@@ -47,3 +47,22 @@ float Entity::getYVelo()
 {
 	return YVelo;
 }
+void Entity::setCollideTop(bool collide)
+{
+	collideTop = collide;
+}
+
+void Entity::setCollideBottom(bool collide)
+{
+	collideBottom = collide;
+}
+
+void Entity::setCollideRight(bool collide)
+{
+	collideRight = collide;
+}
+
+void Entity::setCollideLeft(bool collide)
+{
+	collideLeft = collide;
+}

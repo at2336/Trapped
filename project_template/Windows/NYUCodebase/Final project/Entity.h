@@ -36,4 +36,8 @@ public:
 	float getXVelo();
 	float getYVelo();
 	float getYAccel();
+	void setCollideTop(bool collide);
+	void setCollideBottom(bool collide);
+	void setCollideRight(bool collide);
+	void setCollideLeft(bool collide);
 };

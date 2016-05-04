@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 	Matrix modelMatrix;
 	Matrix viewMatrix;
 
-	projectionMatrix.setOrthoProjection(-2.0, 2.0, -2.0f, 2.0f, -1.0f, 1.0f);
+	projectionMatrix.setOrthoProjection(-4.0, 4.0, -4.0f, 4.0f, -1.0f, 1.0f);
 
 	glUseProgram(program.programID);
 
@@ -54,9 +54,7 @@ int main(int argc, char *argv[])
 		float ticks = (float)SDL_GetTicks() / 1000.0f;
 		float elapsed = ticks - lastFrameTicks;
 		lastFrameTicks = ticks;
-
 		draw.DrawMap(&program);
-		
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
 				done = true;
@@ -65,9 +63,7 @@ int main(int argc, char *argv[])
 			{
 
 			}
-			
 		}
-		glClear(GL_COLOR_BUFFER_BIT);
 		SDL_GL_SwapWindow(displayWindow);
 	}
 
