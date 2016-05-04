@@ -28,7 +28,7 @@ private:
 	int** levelData;
 
 	float tiles = 0.09f;
-
+//can i see the picture file
 	int spriteCountX = 30;
 	int spriteCountY = 30;
 };

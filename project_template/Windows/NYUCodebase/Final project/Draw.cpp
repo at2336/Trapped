@@ -72,7 +72,7 @@ void Draw::DrawSpriteSheetSprite(ShaderProgram *program, int index, int spriteCo
 	};
 	float vertices[] = { -2.0, 1.0, -1.0, 3.0, -2.0, 3.0, -2.0, 1.0, -1.0, 1.0, -1.0, 3.0 };
 
-	GLuint player = LoadTexture("spritesheet.png");
+	GLuint player = LoadTexture("spritesheet_rgba.png");
 	glBindTexture(GL_TEXTURE_2D, player);
 
 	glVertexAttribPointer(program->positionAttribute, 2, GL_FLOAT, false, 0, vertices);
