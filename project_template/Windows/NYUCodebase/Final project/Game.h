@@ -15,11 +15,10 @@ class Game
 public:
 	Game();
 	void hitEntity(Entity entityHit);
-	void hitWall();
+	void hitWall(Entity entityHit);
 	void completeLevel();
 	void renderAndUpdate();
 	GLuint LoadTexture(const char *image);
-	void DrawSpriteSheetSprite(ShaderProgram *program, int index, int spriteCountX, int spriteCountY);
 	void DrawMap(ShaderProgram *program);
 	void drawSprite(GLint texture, float x, float y);
 	bool readEntityData(std::ifstream &stream);
@@ -28,7 +27,6 @@ public:
 	void placeEntity(string type, float placeX, float placeY);
 private:
 	int level;
-	bool moving;
 	string direction;
 	unsigned mapHeight;
 	unsigned mapWidth;
@@ -37,7 +35,7 @@ private:
 
 	int** levelData;
 
-	float tiles = 0.09f;
+	float TILE_SIZE = 0.09f;
 
 	int spriteCountX = 30;
 	int spriteCountY = 30;

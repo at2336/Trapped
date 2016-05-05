@@ -38,12 +38,40 @@ Game::Game()
 
 void Game::hitEntity(Entity entityHit)
 {
-
+	for (int i = 0; i < entities.size(); i++)
+	{
+		if (entities[i]->getType() == "player" && entities[i]->getX() >= entityHit.getX() && entities[i]->getY() >= entityHit.getY())
+		{
+			i = 1;
+		}
+	}
 }
 
-void Game::hitWall()
+void Game::hitWall(Entity entityHit)
 {
-
+	for (int i = 0; i < entities.size(); i++)
+	{
+		if (entities[i]->getType() == "player" && entities[i]->getX() > 2)
+		{
+			entities[i]->setCollideRight(true);
+			entities[i]->setXVelo(0);
+		}
+		if (entities[i]->getType() == "player" && entities[i]->getX() < -2)
+		{
+			entities[i]->setCollideLeft(true);
+			entities[i]->setXVelo(0);
+		}
+		if (entities[i]->getType() == "player" && entities[i]->getY() > 2)
+		{
+			entities[i]->setCollideTop(true);
+			entities[i]->setYVelo(0);
+		}
+		if (entities[i]->getType() == "player" && entities[i]->getY() < -2)
+		{
+			entities[i]->setCollideBottom(true);
+			entities[i]->setYVelo(0);
+		}
+	}
 }
 
 void Game::completeLevel()
@@ -55,13 +83,6 @@ void Game::renderAndUpdate()
 {
 	ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
 
-	DrawMap(&program);
-
-	for (int i = 0; i < entities.size(); i++)
-	{
-		entities[i]->DrawSpriteSheetSprite(&program);
-		cout << entities[i];
-	}
 }
 
 GLuint Game::LoadTexture(const char *image)
@@ -120,8 +141,14 @@ void Game::DrawMap(ShaderProgram *program)
 				float spriteHeight = 1.0f / (float)spriteCountY;
 
 				vertexData.insert(vertexData.end(), {
-					-2.0, 1.0, -1.0, 3.0, -2.0, 3.0, -2.0, 1.0, -1.0, 1.0, -1.0, 3.0
+					TILE_SIZE * x, -TILE_SIZE * y,
+					TILE_SIZE * x, (-TILE_SIZE * y) - TILE_SIZE,
+					(TILE_SIZE * x) + TILE_SIZE, (-TILE_SIZE * y) - TILE_SIZE,
+					TILE_SIZE * x, -TILE_SIZE * y,
+					(TILE_SIZE * x) + TILE_SIZE, (-TILE_SIZE * y) - TILE_SIZE,
+					(TILE_SIZE * x) + TILE_SIZE, -TILE_SIZE * y
 				});
+
 				texData.insert(texData.end(), {
 					u, v + spriteHeight,
 					u + spriteWidth, v,
@@ -210,15 +237,15 @@ void Game::placeEntity(string type, float placeX, float placeY)
 {
 	if (type == "player")
 	{
-		cout << "Player";
+		cout << "player";
 		float w = 1.0f / 16.0f;
 		float h = 1.0f / 16.0f;
 		Entity* player = new Entity(placeX, placeY, w, h, type);
 		entities.push_back(player);
-		cout << "pushed";
 	}
 	if (type == "enemy")
 	{
+		cout << "what";
 		float w = 1.0f / 16.0f;
 		float h = 1.0f / 16.0f;
 		Entity* enemy = new Entity(placeX, placeY, w, h, type);
@@ -250,10 +277,9 @@ bool Game::readEntityData(std::ifstream &stream) {
 			string xPosition, yPosition;
 			getline(lineStream, xPosition, ',');
 			getline(lineStream, yPosition, ',');
-			float placeX = atoi(xPosition.c_str()) / 16 * tiles;
-			float placeY = atoi(yPosition.c_str()) / 16 * -tiles;
+			float placeX = atoi(xPosition.c_str()) / 16 * TILE_SIZE;
+			float placeY = atoi(yPosition.c_str()) / 16 * -TILE_SIZE;
 			placeEntity(type, placeX, placeY);
-			cout << "placed";
 		}
 	}
 	return true;

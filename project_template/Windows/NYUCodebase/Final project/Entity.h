@@ -45,4 +45,5 @@ public:
 	void drawPlayer();
 	GLuint LoadTexture(const char *image);
 	void DrawSpriteSheetSprite(ShaderProgram *program);
+	string getType();
 };

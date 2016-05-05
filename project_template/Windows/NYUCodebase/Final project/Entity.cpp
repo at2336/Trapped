@@ -97,12 +97,18 @@ GLuint Entity::LoadTexture(const char *image)
 	return textureID;
 }
 
+string Entity::getType()
+{
+	return type;
+}
+
 void Entity::DrawSpriteSheetSprite(ShaderProgram *program)
 {
 	int index;
 	if (type == "player")
 	{
 		index = 20;
+		cout << "player1";
 	}
 	else if (type == "rock")
 	{
@@ -126,7 +132,7 @@ void Entity::DrawSpriteSheetSprite(ShaderProgram *program)
 		u + spriteWidth, v + spriteHeight,
 		u + spriteWidth, v
 	};
-	float vertices[] = { -2.0, 1.0, -1.0, 3.0, -2.0, 3.0, -2.0, 1.0, -1.0, 1.0, -1.0, 3.0 };
+	float vertices[] = { x, y, x + 1, y + 2, x, y + 2, x, y, x + 1, y, x + 1, y + 2 };
 
 	GLuint player = LoadTexture("spritesheet.png");
 	glBindTexture(GL_TEXTURE_2D, player);
