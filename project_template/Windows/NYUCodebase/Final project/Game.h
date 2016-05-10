@@ -10,12 +10,14 @@
 #include <string>
 using namespace std;
 
+enum GameState {LEVELONE, LEVELTWO, START, GAMEOVER};
+
 class Game
 {
 public:
 	Game();
-	void hitEntity(Entity entityHit);
-	void hitWall(Entity entityHit);
+	void hitEntity();
+	void hitWall();
 	void completeLevel();
 	void renderAndUpdate();
 	GLuint LoadTexture(const char *image);
@@ -26,20 +28,22 @@ public:
 	bool readHeader(std::ifstream &stream);
 	void placeEntity(string type, float placeX, float placeY);
 	void drawEntities();
+	float distFromPlayer();
 private:
 	int level;
 	string direction;
 	unsigned mapHeight;
 	unsigned mapWidth;
-
+	int state = START;
 	bool win;
 
 	int** levelData;
 
-	float TILE_SIZE = 0.1f;
+	float TILE_SIZE = 0.2f;
 
 	int spriteCountX = 30;
 	int spriteCountY = 30;
 
 	vector<Entity*> entities;
+	vector<Entity*> enemyEntities;
 };

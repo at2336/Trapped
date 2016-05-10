@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 	Matrix modelMatrix;
 	Matrix viewMatrix;
 	viewMatrix.Translate(-1, 1, 0);
-	projectionMatrix.setOrthoProjection(-1.33, 1.33, -1.0, 1.0, -1.0, 1.0);
+	projectionMatrix.setOrthoProjection(-1.33, 1.33, -1.33, 1.33, -1.0, 1.0);
 
 	glUseProgram(program.programID);
 
@@ -62,10 +62,8 @@ int main(int argc, char *argv[])
 			if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
 				done = true;
 			}
-			else if (event.key.keysym.scancode == SDL_SCANCODE_SPACE)
-			{
-				
-			}
+
+
 		}
 	}
 

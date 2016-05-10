@@ -15,7 +15,7 @@ using namespace std;
 #endif
 
 Entity::Entity(float x, float y, float width, float height, string type)
-	: x(x), y(y), width(width), height(height), type(type)
+	: xPos(x), yPos(y), width(width), height(height), type(type)
 {
 	XVelo = 0;
 	YVelo = 0;
@@ -24,11 +24,11 @@ Entity::Entity(float x, float y, float width, float height, string type)
 
 void Entity::setX(float x)
 {
-	x = x;
+	xPos = x;
 }
 void Entity::setY(float y)
 {
-	y = y;
+	yPos = y;
 }
 void Entity::setXVelo(float x)
 {
@@ -40,11 +40,11 @@ void Entity::setYVelo(float y)
 }
 float Entity::getX()
 {
-	return x;
+	return xPos;
 }
 float Entity::getY()
 {
-	return y;
+	return yPos;
 }
 float Entity::getXVelo()
 {
@@ -102,17 +102,16 @@ string Entity::getType()
 	return type;
 }
 
-void Entity::DrawSpriteSheetSprite(ShaderProgram *program, float size)
+void Entity::DrawSpriteSheetSprite(ShaderProgram *program)
 {
 	int index;
 	if (type == "player")
 	{
 		index = 20;
-		cout << "player1";
-	}
+		}
 	else if (type == "rock")
 	{
-		index = 283;
+		index = 281;
 	}
 	else if (type == "enemy")
 	{
@@ -132,19 +131,26 @@ void Entity::DrawSpriteSheetSprite(ShaderProgram *program, float size)
 		u + spriteWidth, v + spriteHeight,
 		u + spriteWidth, v
 	};
-	x, y, x + 1, y + 2, x, y + 2, x, y, x + 1, y, x + 1, y + 2
-	float vertices[] = { -width * size, height * size, width * size, height * size, width * size, height * size, width * size,
-		height * size, width * size, height * size, width * size, height * size };
 
+	float vertices[] = { xPos, -yPos - (10 * TILE_SIZE), xPos + (1*TILE_SIZE), -yPos - (1*TILE_SIZE) * 9, xPos, -yPos - (1*TILE_SIZE) * 9, xPos, -yPos -(10*TILE_SIZE), 
+		xPos + (1*TILE_SIZE), -yPos - (10*TILE_SIZE), xPos + (1 * TILE_SIZE), -yPos - (1 * TILE_SIZE) * 9 };
 	GLuint player = LoadTexture("spritesheet.png");
 	glBindTexture(GL_TEXTURE_2D, player);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glVertexAttribPointer(program->positionAttribute, 2, GL_FLOAT, false, 0, vertices);
 	glEnableVertexAttribArray(program->positionAttribute);
 	glVertexAttribPointer(program->texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords);
 	glEnableVertexAttribArray(program->texCoordAttribute);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-
+	
 	glDisableVertexAttribArray(program->positionAttribute);
 	glDisableVertexAttribArray(program->texCoordAttribute);
+}
+
+bool Entity::isStatic()
+{
+	return isStatic;
 }

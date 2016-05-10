@@ -9,12 +9,12 @@
 #include <string>
 using namespace std;
 
-enum EntityType { ENTITY_PLAYER, ENTITY_ENEMY, ENTITY_COIN };
+enum EntityType { ENTITY_PLAYER, ENTITY_ENEMY};
 
 class Entity {
 private:
-	float x;
-	float y;
+	float xPos;
+	float yPos;
 	int textureID;
 	float width;
 	float height;
@@ -27,6 +27,7 @@ private:
 	bool deadOrWon;
 	SpriteSheet sprite;
 	string type;
+	bool isStatic = true;
 public:
 	Entity(float x, float y, float width, float height, string type);
 	void setX(float x);
@@ -45,6 +46,7 @@ public:
 	GLuint LoadTexture(const char *image);
 	void DrawSpriteSheetSprite(ShaderProgram *program);
 	string getType();
-
-	float TILE_SIZE = 0.09;
+	float SIZE = 1.5f;
+	float TILE_SIZE = 0.2f;
+	bool isStatic();
 };

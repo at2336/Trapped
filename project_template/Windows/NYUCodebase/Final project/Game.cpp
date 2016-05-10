@@ -8,6 +8,10 @@ using namespace std;
 #define RESOURCE_FOLDER "NYUCodebase.app/Contents/Resources/"
 #endif
 
+SDL_Event event;
+
+const Uint8 *keys = SDL_GetKeyboardState(NULL);
+
 Game::Game()
 {
 	mapWidth = 0;
@@ -36,38 +40,54 @@ Game::Game()
 	}
 }
 
-void Game::hitEntity(Entity entityHit)
+void Game::hitEntity()
 {
 	for (int i = 0; i < entities.size(); i++)
 	{
-		if (entities[i]->getType() == "player" && entities[i]->getX() >= entityHit.getX() && entities[i]->getY() >= entityHit.getY())
+		if (entities[i]->getType() == "player" && entities[i]->getX() >= entities[i]->getX() 
+			&& entities[i]->getY() >= entities[i]->getY())
 		{
-			i = 1;
+			state = GAMEOVER;
 		}
 	}
 }
 
-void Game::hitWall(Entity entityHit)
+float Game::distFromPlayer()
 {
 	for (int i = 0; i < entities.size(); i++)
 	{
-		if (entities[i]->getType() == "player" && entities[i]->getX() > 2)
+		if (entities[i]->getType() == "player")
 		{
+			return 1;
+		}
+	}
+}
+
+void Game::hitWall()
+{
+	for (int i = 0; i < entities.size(); i++)
+	{
+		if (entities[i]->getType() == "player" && entities[i]->getX() > 1.32)
+		{
+			entities[i]->setX(1.33);
 			entities[i]->setCollideRight(true);
 			entities[i]->setXVelo(0);
 		}
-		if (entities[i]->getType() == "player" && entities[i]->getX() < -2)
+		if (entities[i]->getType() == "player" && entities[i]->getX() < -1.32)
 		{
+			entities[i]->setX(0);
 			entities[i]->setCollideLeft(true);
 			entities[i]->setXVelo(0);
 		}
-		if (entities[i]->getType() == "player" && entities[i]->getY() > 2)
+		if (entities[i]->getType() == "player" && entities[i]->getY() > -0.1)
 		{
+			entities[i]->setY(0);
 			entities[i]->setCollideTop(true);
 			entities[i]->setYVelo(0);
 		}
-		if (entities[i]->getType() == "player" && entities[i]->getY() < -2)
+		if (entities[i]->getType() == "player" && entities[i]->getY() < -1.32)
 		{
+			entities[i]->setY(-1.33);
 			entities[i]->setCollideBottom(true);
 			entities[i]->setYVelo(0);
 		}
@@ -78,7 +98,11 @@ void Game::drawEntities()
 {
 	ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
 	for (int i = 0; i < entities.size(); i++)
+	{
+		cout << entities[i]->getType();
 		entities[i]->DrawSpriteSheetSprite(&program);
+		entities[i]->DrawSpriteSheetSprite(&program);
+	}
 }
 
 void Game::completeLevel()
@@ -90,6 +114,26 @@ void Game::renderAndUpdate()
 {
 	ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
 
+	if (keys[SDL_SCANCODE_LEFT]) 
+	{
+		if (entities[0]->isStatic())
+		{
+			entities[0]->setXVelo(1.0f);
+			
+		}
+	}
+	else if (keys[SDL_SCANCODE_RIGHT]) {
+		if (entities[0]->isStatic())
+		{
+			entities[0]->setVeloX(-1.0f);
+		}
+	}
+	else if (keys[SDL_SCANCODE_UP]) {
+		entities[0]->setVeloY(1.3f);
+	}
+	else if (keys[SDL_SCANCODE_UP]) {
+		entities[0]->setVeloY(-1.3f);
+	}
 }
 
 GLuint Game::LoadTexture(const char *image)
@@ -143,17 +187,15 @@ void Game::DrawMap(ShaderProgram *program)
 		for (int x = 0; x < mapWidth; x++) {
 			if (levelData[y][x] != 0) {
 				float u = (float)(((int)levelData[y][x]) % spriteCountX) / (float)spriteCountX;
-				u = u - 0.1 * TILE_SIZE;
 				float v = (float)(((int)levelData[y][x]) / spriteCountX) / (float)spriteCountY;
-				v = v - 0.1 * TILE_SIZE;
 				float spriteWidth = 1.0f / (float)spriteCountX;
 				float spriteHeight = 1.0f / (float)spriteCountY;
 
 				vertexData.insert(vertexData.end(), {
-					TILE_SIZE * x, -TILE_SIZE * y,
 					TILE_SIZE * x, (-TILE_SIZE * y) - TILE_SIZE,
-					(TILE_SIZE * x) + TILE_SIZE, (-TILE_SIZE * y) - TILE_SIZE,
+					(TILE_SIZE * x) + TILE_SIZE, (-TILE_SIZE * y),
 					TILE_SIZE * x, -TILE_SIZE * y,
+					TILE_SIZE * x, -TILE_SIZE * y - TILE_SIZE,
 					(TILE_SIZE * x) + TILE_SIZE, (-TILE_SIZE * y) - TILE_SIZE,
 					(TILE_SIZE * x) + TILE_SIZE, -TILE_SIZE * y
 				});
@@ -256,7 +298,7 @@ void Game::placeEntity(string type, float placeX, float placeY)
 		float w = 1.0f / 16.0f;
 		float h = 1.0f / 16.0f;
 		Entity* enemy = new Entity(placeX, placeY, w, h, type);
-		entities.push_back(enemy);
+		enemyEntities.push_back(enemy);
 	}
 	if (type == "rock")
 	{
