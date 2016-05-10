@@ -78,7 +78,6 @@ void drawSprite(float x, float y, float xChange = 0, float yChange = 0)
 	GLuint player = LoadTexture("playerShip2_red.png");
 	glBindTexture(GL_TEXTURE_2D, player);
 
-	glBindTexture(GL_TEXTURE_2D, texture);
 	float vertices[] = { x, y - 3, x + (-x / x) * -2, y, x, y, x, y - 3, x + (-x / x) * -2, y - 3, x + (-x / x) * -2, y };
 	float texCoords[] = { 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0 };
 
@@ -173,7 +172,7 @@ int main(int argc, char *argv[])
 		}
 
 		DrawSpriteSheetSprite(&program, 0, 8, 4, enemyList[0]);
-		drawSprite(3, 3)
+		drawSprite(3, 3);
 
 		SDL_GL_SwapWindow(displayWindow);
 	}
