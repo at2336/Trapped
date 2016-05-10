@@ -102,7 +102,7 @@ string Entity::getType()
 	return type;
 }
 
-void Entity::DrawSpriteSheetSprite(ShaderProgram *program)
+void Entity::DrawSpriteSheetSprite(ShaderProgram *program, float size)
 {
 	int index;
 	if (type == "player")
@@ -132,7 +132,9 @@ void Entity::DrawSpriteSheetSprite(ShaderProgram *program)
 		u + spriteWidth, v + spriteHeight,
 		u + spriteWidth, v
 	};
-	float vertices[] = { x, y, x + 1, y + 2, x, y + 2, x, y, x + 1, y, x + 1, y + 2 };
+	x, y, x + 1, y + 2, x, y + 2, x, y, x + 1, y, x + 1, y + 2
+	float vertices[] = { -width * size, height * size, width * size, height * size, width * size, height * size, width * size,
+		height * size, width * size, height * size, width * size, height * size };
 
 	GLuint player = LoadTexture("spritesheet.png");
 	glBindTexture(GL_TEXTURE_2D, player);

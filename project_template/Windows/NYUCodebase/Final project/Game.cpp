@@ -74,6 +74,13 @@ void Game::hitWall(Entity entityHit)
 	}
 }
 
+void Game::drawEntities()
+{
+	ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
+	for (int i = 0; i < entities.size(); i++)
+		entities[i]->DrawSpriteSheetSprite(&program);
+}
+
 void Game::completeLevel()
 {
 
@@ -136,7 +143,9 @@ void Game::DrawMap(ShaderProgram *program)
 		for (int x = 0; x < mapWidth; x++) {
 			if (levelData[y][x] != 0) {
 				float u = (float)(((int)levelData[y][x]) % spriteCountX) / (float)spriteCountX;
+				u = u - 0.1 * TILE_SIZE;
 				float v = (float)(((int)levelData[y][x]) / spriteCountX) / (float)spriteCountY;
+				v = v - 0.1 * TILE_SIZE;
 				float spriteWidth = 1.0f / (float)spriteCountX;
 				float spriteHeight = 1.0f / (float)spriteCountY;
 
@@ -237,7 +246,6 @@ void Game::placeEntity(string type, float placeX, float placeY)
 {
 	if (type == "player")
 	{
-		cout << "player";
 		float w = 1.0f / 16.0f;
 		float h = 1.0f / 16.0f;
 		Entity* player = new Entity(placeX, placeY, w, h, type);
@@ -245,7 +253,6 @@ void Game::placeEntity(string type, float placeX, float placeY)
 	}
 	if (type == "enemy")
 	{
-		cout << "what";
 		float w = 1.0f / 16.0f;
 		float h = 1.0f / 16.0f;
 		Entity* enemy = new Entity(placeX, placeY, w, h, type);

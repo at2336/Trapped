@@ -37,7 +37,6 @@ public:
 	float getY();
 	float getXVelo();
 	float getYVelo();
-	float getYAccel();
 	void setCollideTop(bool collide);
 	void setCollideBottom(bool collide);
 	void setCollideRight(bool collide);
@@ -46,4 +45,6 @@ public:
 	GLuint LoadTexture(const char *image);
 	void DrawSpriteSheetSprite(ShaderProgram *program);
 	string getType();
+
+	float TILE_SIZE = 0.09;
 };

@@ -25,6 +25,7 @@ public:
 	bool readLayerData(std::ifstream &stream);
 	bool readHeader(std::ifstream &stream);
 	void placeEntity(string type, float placeX, float placeY);
+	void drawEntities();
 private:
 	int level;
 	string direction;
@@ -35,7 +36,7 @@ private:
 
 	int** levelData;
 
-	float TILE_SIZE = 0.09f;
+	float TILE_SIZE = 0.1f;
 
 	int spriteCountX = 30;
 	int spriteCountY = 30;
