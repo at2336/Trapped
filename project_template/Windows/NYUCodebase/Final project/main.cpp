@@ -40,8 +40,6 @@ int main(int argc, char *argv[])
 
 	glUseProgram(program.programID);
 
-	float lastFrameTicks = 0.0f;
-
 	program.setModelMatrix(modelMatrix);
 	program.setProjectionMatrix(projectionMatrix);
 	program.setViewMatrix(viewMatrix);
@@ -51,12 +49,12 @@ int main(int argc, char *argv[])
 	Game game;
 	while (!done) 
 	{
+		glClear(GL_COLOR_BUFFER_BIT);
 
-		float ticks = (float)SDL_GetTicks() / 1000.0f;
-		float elapsed = ticks - lastFrameTicks;
-		lastFrameTicks = ticks;
+
 		game.DrawMap(&program);
 		game.drawEntities();
+		game.renderAndUpdate();
 		SDL_GL_SwapWindow(displayWindow);
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
@@ -66,7 +64,6 @@ int main(int argc, char *argv[])
 
 		}
 	}
-
 	SDL_Quit();
 	return 0;
 }

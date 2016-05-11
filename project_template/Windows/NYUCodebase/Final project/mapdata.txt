@@ -20,6 +20,24 @@ data=
 
 [ObjectsLayer]
 type=player
-location=1.33,1.33,0,0
+location=0,0,0,0
 
+[ObjectsLayer]
+type=rock
+location=40,90,0,0
 
+[ObjectsLayer]
+type=rock
+location=60,150,0,0
+
+[ObjectsLayer]
+type=rock
+location=150,100,0,0
+
+[ObjectsLayer]
+type=rock
+location=130,150,0,0
+
+[ObjectsLayer]
+type=win
+location=150,150,0,0

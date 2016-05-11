@@ -21,6 +21,15 @@ Entity::Entity(float x, float y, float width, float height, string type)
 	YVelo = 0;
 };
 	
+float Entity::getWidth()
+{
+	return width;
+}
+
+float Entity::getHeight()
+{
+	return height;
+}
 
 void Entity::setX(float x)
 {
@@ -117,8 +126,15 @@ void Entity::DrawSpriteSheetSprite(ShaderProgram *program)
 	{
 		index = 235;
 	}
+	else if (type == "win")
+	{
+		index = 762;
+	}
 	int spriteCountX = 30;
 	int spriteCountY = 30;
+	xPos = xPos + XVelo;
+	yPos = yPos + YVelo;
+
 	float u = (float)(((int)index) % spriteCountX) / (float)spriteCountX;
 	float v = (float)(((int)index) / spriteCountX) / (float)spriteCountY;
 	float spriteWidth = 1.0 / (float)spriteCountX;
@@ -131,14 +147,10 @@ void Entity::DrawSpriteSheetSprite(ShaderProgram *program)
 		u + spriteWidth, v + spriteHeight,
 		u + spriteWidth, v
 	};
-
 	float vertices[] = { xPos, -yPos - (10 * TILE_SIZE), xPos + (1*TILE_SIZE), -yPos - (1*TILE_SIZE) * 9, xPos, -yPos - (1*TILE_SIZE) * 9, xPos, -yPos -(10*TILE_SIZE), 
 		xPos + (1*TILE_SIZE), -yPos - (10*TILE_SIZE), xPos + (1 * TILE_SIZE), -yPos - (1 * TILE_SIZE) * 9 };
 	GLuint player = LoadTexture("spritesheet.png");
 	glBindTexture(GL_TEXTURE_2D, player);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glVertexAttribPointer(program->positionAttribute, 2, GL_FLOAT, false, 0, vertices);
 	glEnableVertexAttribArray(program->positionAttribute);
@@ -150,7 +162,12 @@ void Entity::DrawSpriteSheetSprite(ShaderProgram *program)
 	glDisableVertexAttribArray(program->texCoordAttribute);
 }
 
-bool Entity::isStatic()
+bool Entity::getIsStatic()
 {
 	return isStatic;
+}
+
+void Entity::setIsStatic(bool flag)
+{
+	isStatic = flag;
 }

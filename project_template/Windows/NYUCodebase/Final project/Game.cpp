@@ -42,13 +42,15 @@ Game::Game()
 
 void Game::hitEntity()
 {
-	for (int i = 0; i < entities.size(); i++)
+	for (int i = 1; i < entities.size(); i++)
 	{
-		if (entities[i]->getType() == "player" && entities[i]->getX() >= entities[i]->getX() 
-			&& entities[i]->getY() >= entities[i]->getY())
+		if (entities[0]->getX() >= entities[i]->getX() && entities[0]->getX() < entities[i]->getX() + entities[i]->getWidth() * 1.5f &&
+			entities[0]->getY() >= entities[i]->getY() && entities[0]->getX() < entities[i]->getY() - entities[i]->getHeight() * 1.5f )
 		{
-			state = GAMEOVER;
+			cout << "hit";
+			cout << entities[i]->getWidth();
 		}
+		cout << entities[i]->getX() << endl;
 	}
 }
 
@@ -67,29 +69,33 @@ void Game::hitWall()
 {
 	for (int i = 0; i < entities.size(); i++)
 	{
-		if (entities[i]->getType() == "player" && entities[i]->getX() > 1.32)
+		if (entities[i]->getType() == "player" && entities[i]->getX() > 1.8)
 		{
-			entities[i]->setX(1.33);
+			entities[i]->setX(1.8);
 			entities[i]->setCollideRight(true);
 			entities[i]->setXVelo(0);
+			entities[i]->setIsStatic(true);
 		}
-		if (entities[i]->getType() == "player" && entities[i]->getX() < -1.32)
+		else if (entities[i]->getType() == "player" && entities[i]->getX() < 0)
 		{
 			entities[i]->setX(0);
 			entities[i]->setCollideLeft(true);
 			entities[i]->setXVelo(0);
+			entities[i]->setIsStatic(true);
 		}
-		if (entities[i]->getType() == "player" && entities[i]->getY() > -0.1)
+		if (entities[i]->getType() == "player" && entities[i]->getY() < -1.8)
 		{
-			entities[i]->setY(0);
+			entities[i]->setY(-1.8);
 			entities[i]->setCollideTop(true);
 			entities[i]->setYVelo(0);
+			entities[i]->setIsStatic(true);
 		}
-		if (entities[i]->getType() == "player" && entities[i]->getY() < -1.32)
+		else if (entities[i]->getType() == "player" && entities[i]->getY() > 0.1)
 		{
-			entities[i]->setY(-1.33);
+			entities[i]->setY(0);
 			entities[i]->setCollideBottom(true);
 			entities[i]->setYVelo(0);
+			entities[i]->setIsStatic(true);
 		}
 	}
 }
@@ -99,41 +105,59 @@ void Game::drawEntities()
 	ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
 	for (int i = 0; i < entities.size(); i++)
 	{
-		cout << entities[i]->getType();
-		entities[i]->DrawSpriteSheetSprite(&program);
 		entities[i]->DrawSpriteSheetSprite(&program);
 	}
 }
 
 void Game::completeLevel()
 {
-
+	if (entities[0]->getX() > 1.5 && entities[0]->getY() < -1.5)
+		cout << "win";
 }
 
 void Game::renderAndUpdate()
 {
 	ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
 
-	if (keys[SDL_SCANCODE_LEFT]) 
-	{
-		if (entities[0]->isStatic())
+	float ticks = (float)SDL_GetTicks() / 1000.0f;
+	float elapsed = ticks - lastFrameTicks;
+	lastFrameTicks = ticks;
+	while (SDL_PollEvent(&event)) {
+		if (event.key.keysym.scancode == SDL_SCANCODE_LEFT)
 		{
-			entities[0]->setXVelo(1.0f);
-			
+			if (entities[0]->getIsStatic() && entities[0]->getX() > 0)
+			{
+				entities[0]->setXVelo(-2.0f * elapsed);
+				entities[0]->setIsStatic(false);
+			}
+		}
+		else if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+			if (entities[0]->getIsStatic() && entities[0]->getX() < 1.79)
+			{
+				entities[0]->setXVelo(2.0f * elapsed);
+				entities[0]->setIsStatic(false);
+			}
+		}
+		else if (event.key.keysym.scancode == SDL_SCANCODE_UP)
+		{
+			if (entities[0]->getIsStatic() && entities[0]->getY() >= 0)
+			{
+				entities[0]->setYVelo(-2.0f * elapsed);
+				entities[0]->setIsStatic(false);
+			}
+		}
+		else if (event.key.keysym.scancode == SDL_SCANCODE_DOWN)
+		{
+			if (entities[0]->getIsStatic() && entities[0]->getY() <= -1.8f)
+			{
+				entities[0]->setYVelo(2.0f * elapsed);
+				entities[0]->setIsStatic(false);
+			}
 		}
 	}
-	else if (keys[SDL_SCANCODE_RIGHT]) {
-		if (entities[0]->isStatic())
-		{
-			entities[0]->setVeloX(-1.0f);
-		}
-	}
-	else if (keys[SDL_SCANCODE_UP]) {
-		entities[0]->setVeloY(1.3f);
-	}
-	else if (keys[SDL_SCANCODE_UP]) {
-		entities[0]->setVeloY(-1.3f);
-	}
+	hitWall();
+	hitEntity();
+	completeLevel();
 }
 
 GLuint Game::LoadTexture(const char *image)
@@ -211,8 +235,6 @@ void Game::DrawMap(ShaderProgram *program)
 			}
 		}
 	}
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glVertexAttribPointer(program->positionAttribute, 2, GL_FLOAT, false, 0, vertexData.data());
 	glEnableVertexAttribArray(program->positionAttribute);
@@ -286,27 +308,10 @@ bool Game::readLayerData(std::ifstream &stream) {
 
 void Game::placeEntity(string type, float placeX, float placeY)
 {
-	if (type == "player")
-	{
 		float w = 1.0f / 16.0f;
 		float h = 1.0f / 16.0f;
 		Entity* player = new Entity(placeX, placeY, w, h, type);
 		entities.push_back(player);
-	}
-	if (type == "enemy")
-	{
-		float w = 1.0f / 16.0f;
-		float h = 1.0f / 16.0f;
-		Entity* enemy = new Entity(placeX, placeY, w, h, type);
-		enemyEntities.push_back(enemy);
-	}
-	if (type == "rock")
-	{
-		float w = 1.0f / 16.0f;
-		float h = 1.0f / 16.0f;
-		Entity* rock = new Entity(placeX, placeY, w, h, type);
-		entities.push_back(rock);
-	}
 }
 
 bool Game::readEntityData(std::ifstream &stream) {

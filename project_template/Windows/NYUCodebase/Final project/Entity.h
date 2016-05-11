@@ -4,7 +4,6 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <SDL_image.h>
-#include "ShaderProgram.h"
 #include "SpriteSheet.h"
 #include <string>
 using namespace std;
@@ -25,9 +24,9 @@ private:
 	bool collideLeft;
 	bool collideBottom;
 	bool deadOrWon;
+	bool isStatic = true;
 	SpriteSheet sprite;
 	string type;
-	bool isStatic = true;
 public:
 	Entity(float x, float y, float width, float height, string type);
 	void setX(float x);
@@ -38,6 +37,8 @@ public:
 	float getY();
 	float getXVelo();
 	float getYVelo();
+	float getWidth();
+	float getHeight();
 	void setCollideTop(bool collide);
 	void setCollideBottom(bool collide);
 	void setCollideRight(bool collide);
@@ -48,5 +49,7 @@ public:
 	string getType();
 	float SIZE = 1.5f;
 	float TILE_SIZE = 0.2f;
-	bool isStatic();
+	bool getIsStatic();
+	void setIsStatic(bool flag);
+	float TIMESTEP = 0.016f;
 };

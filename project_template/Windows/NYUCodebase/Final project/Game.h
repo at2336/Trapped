@@ -46,4 +46,5 @@ private:
 
 	vector<Entity*> entities;
 	vector<Entity*> enemyEntities;
+	float lastFrameTicks = 0.0f;
 };
