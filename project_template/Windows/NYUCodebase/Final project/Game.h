@@ -1,13 +1,9 @@
-#ifdef _WINDOWS
-#include <GL/glew.h>
-#endif
-#include <SDL.h>
-#include <SDL_opengl.h>
-#include <SDL_image.h>
 #include "ShaderProgram.h"
 #include <vector>
 #include "Entity.h"
 #include <string>
+#include <SDL_mixer.h>
+
 using namespace std;
 
 enum GameState {LEVELONE, LEVELTWO, START, GAMEOVER};
@@ -19,16 +15,17 @@ public:
 	void hitEntity();
 	void hitWall();
 	void completeLevel();
-	void renderAndUpdate();
+	void renderAndUpdate(ShaderProgram program);
 	GLuint LoadTexture(const char *image);
 	void DrawMap(ShaderProgram *program);
-	void drawSprite(GLint texture, float x, float y);
+	void drawSprite(ShaderProgram program, GLint texture, float x, float y);
 	bool readEntityData(std::ifstream &stream);
 	bool readLayerData(std::ifstream &stream);
 	bool readHeader(std::ifstream &stream);
 	void placeEntity(string type, float placeX, float placeY);
-	void drawEntities();
+	void drawEntities(ShaderProgram program);
 	float distFromPlayer();
+	void gameOver();
 private:
 	int level;
 	string direction;
@@ -43,8 +40,10 @@ private:
 
 	int spriteCountX = 30;
 	int spriteCountY = 30;
-
+	float elapsed;
 	vector<Entity*> entities;
 	vector<Entity*> enemyEntities;
 	float lastFrameTicks = 0.0f;
+
+	Mix_Chunk *someSound;
 };

@@ -27,6 +27,7 @@ private:
 	bool isStatic = true;
 	SpriteSheet sprite;
 	string type;
+	float accel;
 public:
 	Entity(float x, float y, float width, float height, string type);
 	void setX(float x);

@@ -1,14 +1,4 @@
-﻿  Game.cpp
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(45): warning C4018: '<' : signed/unsigned mismatch
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(59): warning C4018: '<' : signed/unsigned mismatch
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(70): warning C4018: '<' : signed/unsigned mismatch
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(74): warning C4305: 'argument' : truncation from 'double' to 'float'
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(88): warning C4305: 'argument' : truncation from 'double' to 'float'
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(106): warning C4018: '<' : signed/unsigned mismatch
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(210): warning C4018: '<' : signed/unsigned mismatch
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(211): warning C4018: '<' : signed/unsigned mismatch
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(271): warning C4018: '<' : signed/unsigned mismatch
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(287): warning C4018: '<' : signed/unsigned mismatch
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(292): warning C4018: '<' : signed/unsigned mismatch
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(66): warning C4715: 'Game::distFromPlayer' : not all control paths return a value
+﻿  Entity.cpp
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\entity.cpp(134): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\entity.cpp(135): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
   NYUCodebase.vcxproj -> C:\Users\Alex\Desktop\Intro to game programming\Game-Programming\gameprogramming\project_template\Windows\NYUCodebase\Final project\Debug\NYUCodebase.exe

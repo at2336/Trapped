@@ -1,10 +1,3 @@
-#ifdef _WINDOWS
-#include <GL/glew.h>
-#endif
-#include <SDL.h>
-#include <SDL_opengl.h>
-#include <SDL_image.h>
-#include "ShaderProgram.h"
 #include "Matrix.h"
 #include "vector"
 #include "Game.h"
@@ -21,6 +14,10 @@ SDL_Window* displayWindow;
 
 int main(int argc, char *argv[])
 {
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
+	Mix_Music *music;
+	music = Mix_LoadMUS("music.mp3");
+
 	SDL_Init(SDL_INIT_VIDEO);
 	displayWindow = SDL_CreateWindow("My Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL);
 	SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
@@ -53,8 +50,8 @@ int main(int argc, char *argv[])
 
 
 		game.DrawMap(&program);
-		game.drawEntities();
-		game.renderAndUpdate();
+		game.drawEntities(program);
+		game.renderAndUpdate(program);
 		SDL_GL_SwapWindow(displayWindow);
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
@@ -64,6 +61,7 @@ int main(int argc, char *argv[])
 
 		}
 	}
+	Mix_FreeMusic(music);
 	SDL_Quit();
 	return 0;
 }

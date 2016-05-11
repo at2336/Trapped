@@ -1,9 +1,3 @@
-#ifdef _WINDOWS
-#include <GL/glew.h>
-#endif
-#include <SDL.h>
-#include <SDL_opengl.h>
-#include <SDL_image.h>
 #include "Entity.h"
 
 using namespace std;
@@ -117,7 +111,7 @@ void Entity::DrawSpriteSheetSprite(ShaderProgram *program)
 	if (type == "player")
 	{
 		index = 20;
-		}
+	}
 	else if (type == "rock")
 	{
 		index = 281;
@@ -134,7 +128,7 @@ void Entity::DrawSpriteSheetSprite(ShaderProgram *program)
 	int spriteCountY = 30;
 	xPos = xPos + XVelo;
 	yPos = yPos + YVelo;
-
+	cout << XVelo;
 	float u = (float)(((int)index) % spriteCountX) / (float)spriteCountX;
 	float v = (float)(((int)index) / spriteCountX) / (float)spriteCountY;
 	float spriteWidth = 1.0 / (float)spriteCountX;

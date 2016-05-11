@@ -2,12 +2,6 @@
 
 using namespace std;
 
-#ifdef _WINDOWS
-#define RESOURCE_FOLDER ""
-#else
-#define RESOURCE_FOLDER "NYUCodebase.app/Contents/Resources/"
-#endif
-
 SDL_Event event;
 
 const Uint8 *keys = SDL_GetKeyboardState(NULL);
@@ -38,19 +32,47 @@ Game::Game()
 			readEntityData(infile);
 		}
 	}
+	someSound = Mix_LoadWAV("sfx.wav");
 }
 
 void Game::hitEntity()
 {
 	for (int i = 1; i < entities.size(); i++)
 	{
-		if (entities[0]->getX() >= entities[i]->getX() && entities[0]->getX() < entities[i]->getX() + entities[i]->getWidth() * 1.5f &&
-			entities[0]->getY() >= entities[i]->getY() && entities[0]->getX() < entities[i]->getY() - entities[i]->getHeight() * 1.5f )
+		if (entities[0]->getX() > entities[i]->getX() - entities[i]->getWidth() * 3.0f
+			&& entities[0]->getX() <= entities[i]->getX() + entities[i]->getWidth() * 3.0f
+			&& entities[0]->getY() >= entities[i]->getY()
+			&& entities[0]->getY() < entities[1]->getY() + entities[i]->getHeight() - 0.1f)
 		{
-			cout << "hit";
-			cout << entities[i]->getWidth();
+			if (entities[0]->getXVelo() > 0)
+			{
+				entities[0]->setX(entities[i]->getX() - entities[i]->getWidth() * 3.0f);
+				entities[0]->setXVelo(0);
+				entities[0]->setIsStatic(true);
+				Mix_PlayChannel(-1, someSound, 0);
+			}
+			else if (entities[0]->getXVelo() < 0)
+			{
+				entities[0]->setX(entities[i]->getX() + entities[i]->getWidth() * 3.0f + 0.01f);
+				entities[0]->setXVelo(0);
+				entities[0]->setIsStatic(true);
+				Mix_PlayChannel(-1, someSound, 0);
+			}
+			else if (entities[0]->getYVelo() < 0)
+			{
+				entities[0]->setY(entities[i]->getY() + entities[i]->getHeight() * 3.0f);
+				entities[0]->setYVelo(0);
+				entities[0]->setIsStatic(true);
+				Mix_PlayChannel(-1, someSound, 0);
+			}
+			else if (entities[0]->getYVelo() > 0)
+			{
+				entities[0]->setY(entities[i]->getY() - entities[i]->getHeight() * 3.0f);
+				entities[0]->setYVelo(0);
+				entities[0]->setIsStatic(true);
+				Mix_PlayChannel(-1, someSound, 0);
+			}
 		}
-		cout << entities[i]->getX() << endl;
 	}
 }
 
@@ -75,6 +97,7 @@ void Game::hitWall()
 			entities[i]->setCollideRight(true);
 			entities[i]->setXVelo(0);
 			entities[i]->setIsStatic(true);
+			float screenShakeValue = 0;
 		}
 		else if (entities[i]->getType() == "player" && entities[i]->getX() < 0)
 		{
@@ -89,6 +112,7 @@ void Game::hitWall()
 			entities[i]->setCollideTop(true);
 			entities[i]->setYVelo(0);
 			entities[i]->setIsStatic(true);
+			cout << entities[i]->getY() << endl;
 		}
 		else if (entities[i]->getType() == "player" && entities[i]->getY() > 0.1)
 		{
@@ -100,9 +124,13 @@ void Game::hitWall()
 	}
 }
 
-void Game::drawEntities()
+void Game::gameOver()
 {
-	ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
+	Mix_FreeChunk(someSound);
+}
+
+void Game::drawEntities(ShaderProgram program)
+{
 	for (int i = 0; i < entities.size(); i++)
 	{
 		entities[i]->DrawSpriteSheetSprite(&program);
@@ -115,12 +143,10 @@ void Game::completeLevel()
 		cout << "win";
 }
 
-void Game::renderAndUpdate()
+void Game::renderAndUpdate(ShaderProgram program)
 {
-	ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
-
 	float ticks = (float)SDL_GetTicks() / 1000.0f;
-	float elapsed = ticks - lastFrameTicks;
+	elapsed = ticks - lastFrameTicks;
 	lastFrameTicks = ticks;
 	while (SDL_PollEvent(&event)) {
 		if (event.key.keysym.scancode == SDL_SCANCODE_LEFT)
@@ -140,7 +166,7 @@ void Game::renderAndUpdate()
 		}
 		else if (event.key.keysym.scancode == SDL_SCANCODE_UP)
 		{
-			if (entities[0]->getIsStatic() && entities[0]->getY() >= 0)
+			if (entities[0]->getIsStatic() && entities[0]->getY() >= -1.8)
 			{
 				entities[0]->setYVelo(-2.0f * elapsed);
 				entities[0]->setIsStatic(false);
@@ -176,10 +202,8 @@ GLuint Game::LoadTexture(const char *image)
 	return textureID;
 }
 
-void Game::drawSprite(GLint texture, float x, float y)
+void Game::drawSprite(ShaderProgram program, GLint texture, float x, float y)
 {
-	ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
-
 	glBindTexture(GL_TEXTURE_2D, texture);
 	float vertices[] = { -2.0, 1.0, -1.0, 3.0, -2.0, 3.0, -2.0, 1.0, -1.0, 1.0, -1.0, 3.0 };
 	float texCoords[] = { 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0 };
