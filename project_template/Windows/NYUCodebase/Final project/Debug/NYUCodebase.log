@@ -1,4 +1,41 @@
-﻿  Entity.cpp
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\entity.cpp(134): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\entity.cpp(135): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+﻿  Game.cpp
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\entity.h(32): warning C4351: new behavior: elements of array 'Entity::runAnimation' will be default initialized
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(48): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(134): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(189): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(197): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(199): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(201): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(203): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(236): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(244): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(252): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(257): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(265): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(267): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(269): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(271): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(283): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(289): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(290): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(296): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(297): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(306): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(361): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(378): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(382): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(390): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(404): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(418): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(427): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(432): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(585): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(586): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(649): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(665): warning C4018: '<' : signed/unsigned mismatch
+c:\users\alex\desktop\intro to game programming\game-programming\gameprogramming\project_template\windows\nyucodebase\final project\game.cpp(670): warning C4018: '<' : signed/unsigned mismatch
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  main.cpp
+MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
   NYUCodebase.vcxproj -> C:\Users\Alex\Desktop\Intro to game programming\Game-Programming\gameprogramming\project_template\Windows\NYUCodebase\Final project\Debug\NYUCodebase.exe
