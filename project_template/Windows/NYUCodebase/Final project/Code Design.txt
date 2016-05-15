@@ -1,0 +1,19 @@
+The game is a top-down puzzle with differing puzzles for each level. The goal is to reach the portal(upper-right hand corner) 
+in order to reach the next stage without touching the enemies. Upon touching an enemy, the player will die, losing the game.
+
+The first level doesn't have any enemies. The player must slide on the ice using the boxes and walls to reach the portal. 
+When a player moves, the character is unable to change directions or stop until the character collides with something. 
+The player must then use this and brainstorm a strategy to reach the end. The controls are UP, DOWN, LEFT, and RIGHT arrow keys.
+
+The second stage is similar, but the character is not limited to sliding in one direction at any given moment. 
+The user has free movement, and must reach the end without before getting hit by the enemies. 
+The boxes teleport a user randomly when the user is within a certain area. 
+
+For the third stage, the player must push the box onto the tiles in order for the player to win while avoiding the enemies. 
+Upon reaching the portal, the player will be shown a winning message and the game will end. 
+On the other hand, if the player loses/dies, he will be shown a game over. Pressing spacebar will also result in a game over anytime during the game.
+
+I designed the game using a tile map with spritesheets and translating the view matrix so window focuses on the map. 
+The player, enemies, boxes, and portal are all entities in the entities vector. There is a flag that checks if an entity is static or not. 
+Using this flag, I can control whether the user is sliding so he cannot change directions or stop until colliding. 
+Movement is determined by using lerp on the velocity with a fixed timestep for better collision detection and movement.
